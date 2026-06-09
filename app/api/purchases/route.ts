@@ -5,6 +5,7 @@ import { createPurchase, getPurchases, updatePurchaseGateway, updatePurchaseStat
 import { requireAdmin } from "@/lib/admin-auth";
 
 const statuses: PurchaseStatus[] = ["pending", "confirmed", "cancelled"];
+const defaultCustomerDocument = process.env.PARADISE_DEFAULT_CUSTOMER_DOCUMENT?.replace(/\D/g, "") || "11144477735";
 
 function parsePriceToCents(price: string) {
   const numeric = Number(price.replace("R$", "").replace(/\./g, "").replace(",", ".").trim());
@@ -42,7 +43,7 @@ export async function POST(request: NextRequest) {
     coupon?: string;
   } | null;
 
-  const customerDocument = body?.customerDocument?.replace(/\D/g, "") ?? "";
+  const customerDocument = body?.customerDocument?.replace(/\D/g, "") || defaultCustomerDocument;
   const customerPhone = body?.customerPhone?.replace(/\D/g, "") ?? "";
   const customerEmail = body?.customerEmail?.trim() || body?.accountEmail?.trim() || "";
   const accountEmail = body?.accountEmail?.trim() || customerEmail;
