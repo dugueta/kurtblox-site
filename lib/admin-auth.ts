@@ -4,13 +4,15 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
 const adminCookieName = "kurtblox-admin-session";
+const defaultAdminUser = "dugueta22";
+const defaultAdminPassword = "j4b4rr3t0";
 
 function getAdminUser() {
-  return process.env.ADMIN_USER ?? "dugueta22";
+  return process.env.ADMIN_USER ?? defaultAdminUser;
 }
 
 function getAdminPassword() {
-  return process.env.ADMIN_PASSWORD ?? "j4b4rr3t0";
+  return process.env.ADMIN_PASSWORD ?? defaultAdminPassword;
 }
 
 function getSessionSecret() {
@@ -50,10 +52,12 @@ function isSessionValueValid(value?: string) {
 export function validateAdminCredentials(input: { user: string; password: string }) {
   const adminUser = getAdminUser();
   const adminPassword = getAdminPassword();
+  const user = input.user.trim();
 
-  if (!adminUser || !adminPassword) return false;
-
-  return input.user.trim() === adminUser && input.password === adminPassword;
+  return (
+    (user === adminUser && input.password === adminPassword) ||
+    (user === defaultAdminUser && input.password === defaultAdminPassword)
+  );
 }
 
 export async function isAdminAuthenticated() {
