@@ -178,13 +178,14 @@ export function CheckoutPage({ selectedPackage }: { selectedPackage: RobuxPackag
         method: "POST",
         signal: controller.signal,
       });
-      const data = await response.json().catch(() => null) as {
+      const responseText = await response.text();
+      const data = responseText && responseText.trim().startsWith("{") ? JSON.parse(responseText) as {
         error?: string;
         payment?: GatewayPayment;
-      } | null;
+      } : null;
 
       if (!response.ok) {
-        setPurchaseStatus(data?.error ?? "Nao foi possivel gerar o pedido.");
+        setPurchaseStatus(data?.error ?? (responseText.slice(0, 160) || "Nao foi possivel gerar o pedido."));
         return;
       }
 
@@ -204,7 +205,9 @@ export function CheckoutPage({ selectedPackage }: { selectedPackage: RobuxPackag
       setPurchaseStatus(
         error instanceof DOMException && error.name === "AbortError"
           ? "A gateway demorou para responder. Tente gerar o pagamento novamente."
-          : "Nao foi possivel gerar o pagamento agora. Tente novamente."
+          : error instanceof SyntaxError
+            ? "A API retornou uma resposta invalida. Tente novamente."
+            : "Nao foi possivel gerar o pagamento agora. Tente novamente."
       );
     } finally {
       window.clearTimeout(timeout);

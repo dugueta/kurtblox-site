@@ -33,22 +33,91 @@ type PurchasesData = {
 };
 
 const purchasesPath = path.join(process.cwd(), "data", "purchases.json");
+const writablePurchasesPath = process.env.VERCEL
+  ? path.join("/tmp", "kurtblox", "purchases.json")
+  : purchasesPath;
+const purchasesKvKey = "kurtblox:purchases";
 
 function createEmptyData(): PurchasesData {
   return { purchases: [] };
 }
 
+function hasKvStore() {
+  return Boolean(process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN);
+}
+
+async function readPurchasesFromKv(): Promise<PurchasesData | null> {
+  if (!hasKvStore()) return null;
+
+  const response = await fetch(process.env.KV_REST_API_URL!, {
+    body: JSON.stringify(["GET", purchasesKvKey]),
+    headers: {
+      Authorization: `Bearer ${process.env.KV_REST_API_TOKEN}`,
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+  });
+
+  if (!response.ok) {
+    throw new Error(`KV read failed with HTTP ${response.status}`);
+  }
+
+  const data = await response.json() as { result?: string | PurchasesData | null };
+
+  if (!data.result) return null;
+  if (typeof data.result === "string") return JSON.parse(data.result) as PurchasesData;
+
+  return data.result;
+}
+
+async function writePurchasesToKv(data: PurchasesData) {
+  if (!hasKvStore()) return false;
+
+  const response = await fetch(process.env.KV_REST_API_URL!, {
+    body: JSON.stringify(["SET", purchasesKvKey, JSON.stringify(data)]),
+    headers: {
+      Authorization: `Bearer ${process.env.KV_REST_API_TOKEN}`,
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+  });
+
+  if (!response.ok) {
+    throw new Error(`KV write failed with HTTP ${response.status}`);
+  }
+
+  return true;
+}
+
 async function readPurchasesData(): Promise<PurchasesData> {
   try {
-    return JSON.parse(await readFile(purchasesPath, "utf8")) as PurchasesData;
+    const kvData = await readPurchasesFromKv();
+
+    if (kvData) return kvData;
+  } catch (error) {
+    console.error("Nao foi possivel ler compras do KV.", error);
+  }
+
+  try {
+    return JSON.parse(await readFile(writablePurchasesPath, "utf8")) as PurchasesData;
   } catch {
-    return createEmptyData();
+    try {
+      return JSON.parse(await readFile(purchasesPath, "utf8")) as PurchasesData;
+    } catch {
+      return createEmptyData();
+    }
   }
 }
 
 async function writePurchasesData(data: PurchasesData) {
-  await mkdir(path.dirname(purchasesPath), { recursive: true });
-  await writeFile(purchasesPath, JSON.stringify(data, null, 2));
+  try {
+    if (await writePurchasesToKv(data)) return;
+  } catch (error) {
+    console.error("Nao foi possivel gravar compras no KV.", error);
+  }
+
+  await mkdir(path.dirname(writablePurchasesPath), { recursive: true });
+  await writeFile(writablePurchasesPath, JSON.stringify(data, null, 2));
 }
 
 export async function getPurchases(input?: { accountEmail?: string; confirmedOnly?: boolean }) {
