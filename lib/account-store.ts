@@ -34,6 +34,11 @@ async function readAccountsData(): Promise<AccountsData> {
 }
 
 async function writeAccountsData(data: AccountsData) {
+  if (process.env.VERCEL) {
+    console.log("Vercel detectado, ignorando gravação em accounts.json");
+    return;
+  }
+
   await mkdir(path.dirname(accountsPath), { recursive: true });
   await writeFile(accountsPath, JSON.stringify(data, null, 2));
 }
