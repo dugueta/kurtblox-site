@@ -1,0 +1,112 @@
+{
+  "accesses": [
+    {
+      "id": "818fcd70-123e-4fd3-96a8-fe4a7b9ccd35",
+      "visitorId": "3857bf75-1fad-477d-8764-0b23f38a2321",
+      "path": "/",
+      "referrer": "",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36 OPR/131.0.0.0",
+      "createdAt": "2026-06-09T01:00:58.680Z",
+      "day": "2026-06-08"
+    },
+    {
+      "id": "06053fc6-edcc-4d36-886a-eaa20cb50501",
+      "visitorId": "3857bf75-1fad-477d-8764-0b23f38a2321",
+      "path": "/",
+      "referrer": "",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36 OPR/131.0.0.0",
+      "createdAt": "2026-06-09T01:01:40.293Z",
+      "day": "2026-06-08"
+    },
+    {
+      "id": "9bf87a73-79ca-46d5-a6e1-8cec072758e3",
+      "visitorId": "3857bf75-1fad-477d-8764-0b23f38a2321",
+      "path": "/",
+      "referrer": "",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36 OPR/131.0.0.0",
+      "createdAt": "2026-06-09T01:13:21.740Z",
+      "day": "2026-06-08"
+    },
+    {
+      "id": "5c62aecf-807f-403b-b57a-d20d73b3d5ea",
+      "visitorId": "3857bf75-1fad-477d-8764-0b23f38a2321",
+      "path": "/",
+      "referrer": "",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36 OPR/131.0.0.0",
+      "createdAt": "2026-06-09T01:13:26.634Z",
+      "day": "2026-06-08"
+    },
+    {
+      "id": "a801cdc9-c8e7-4b1d-adf1-8ee9e3f3a325",
+      "visitorId": "3857bf75-1fad-477d-8764-0b23f38a2321",
+      "path": "/",
+      "referrer": "",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36 OPR/131.0.0.0",
+      "createdAt": "2026-06-09T01:13:29.984Z",
+      "day": "2026-06-08"
+    },
+    {
+      "id": "2ba8a348-88f0-4c7a-b660-5aab7aacd7b8",
+      "visitorId": "3857bf75-1fad-477d-8764-0b23f38a2321",
+      "path": "/",
+      "referrer": "",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36 OPR/131.0.0.0",
+      "createdAt": "2026-06-09T01:17:02.822Z",
+      "day": "2026-06-08"
+    },
+    {
+      "id": "b46d9e88-c238-46ef-bdb1-d303d31ea883",
+      "visitorId": "3857bf75-1fad-477d-8764-0b23f38a2321",
+      "path": "/",
+      "referrer": "",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36 OPR/131.0.0.0",
+      "createdAt": "2026-06-09T01:17:07.564Z",
+      "day": "2026-06-08"
+    },
+    {
+      "id": "09286cb4-d463-479a-a0d5-decc3217046a",
+      "visitorId": "3857bf75-1fad-477d-8764-0b23f38a2321",
+      "path": "/",
+      "referrer": "",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36 OPR/131.0.0.0",
+      "createdAt": "2026-06-09T01:17:27.956Z",
+      "day": "2026-06-08"
+    },
+    {
+      "id": "9c6b933c-63fc-42b6-bf09-1b46783c8d8f",
+      "visitorId": "3857bf75-1fad-477d-8764-0b23f38a2321",
+      "path": "/",
+      "referrer": "",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36 OPR/131.0.0.0",
+      "createdAt": "2026-06-09T01:29:14.716Z",
+      "day": "2026-06-08"
+    },
+    {
+      "id": "2c9c715b-ac39-4009-8582-c090fe64955c",
+      "visitorId": "3857bf75-1fad-477d-8764-0b23f38a2321",
+      "path": "/",
+      "referrer": "",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36 OPR/131.0.0.0",
+      "createdAt": "2026-06-09T01:35:11.278Z",
+      "day": "2026-06-08"
+    },
+    {
+      "id": "aedfc392-f805-4f73-917f-d3eb6909b88a",
+      "visitorId": "3857bf75-1fad-477d-8764-0b23f38a2321",
+      "path": "/",
+      "referrer": "",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36 OPR/131.0.0.0",
+      "createdAt": "2026-06-09T01:35:21.549Z",
+      "day": "2026-06-08"
+    },
+    {
+      "id": "598e6284-4348-46e4-8c81-2fa7162ebaa0",
+      "visitorId": "3857bf75-1fad-477d-8764-0b23f38a2321",
+      "path": "/",
+      "referrer": "",
+      "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36 OPR/131.0.0.0",
+      "createdAt": "2026-06-09T01:35:42.785Z",
+      "day": "2026-06-08"
+    }
+  ]
+}

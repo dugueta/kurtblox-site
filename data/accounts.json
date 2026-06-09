@@ -1,0 +1,13 @@
+{
+  "accounts": [
+    {
+      "id": "0184f521-3c97-479d-9277-e15517a67838",
+      "name": "dugueta",
+      "email": "dugueta22",
+      "password": "scrypt$b54220a1ce3e7e862b0bff9c8ae5e53d$cd37413c8fea34c30dc7b713b71b5da15f1e6f0f3a37f3639e936c91944fa8e90288ec5e5711914f380f0641e94c33d1472dd19767af035c2b48ccaf667bb643",
+      "provider": "email",
+      "createdAt": "2026-06-08T21:57:50.465Z",
+      "lastLoginAt": "2026-06-09T01:00:28.095Z"
+    }
+  ]
+}

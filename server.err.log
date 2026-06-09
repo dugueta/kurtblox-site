@@ -1,0 +1,61 @@
+[browser] Uncaught Error: Internal Next.js error: Router action dispatched before initialization.
+[browser] Can't perform a React state update on a component that hasn't mounted yet. This indicates that you have a side-effect in your render function that asynchronously tries to update the component. Move this work to useEffect instead. 
+⨯ SyntaxError: Unexpected end of JSON input
+    at JSON.parse (<anonymous>) {
+  page: '/api/analytics/access'
+}
+⨯ SyntaxError: Unexpected end of JSON input
+    at JSON.parse (<anonymous>) {
+  page: '/api/accounts'
+}
+⨯ SyntaxError: Unexpected end of JSON input
+    at JSON.parse (<anonymous>) {
+  page: '/'
+}
+⨯ SyntaxError: Unexpected end of JSON input
+    at JSON.parse (<anonymous>) {
+  page: '/api/analytics/access'
+}
+⨯ SyntaxError: Unexpected end of JSON input
+    at JSON.parse (<anonymous>) {
+  page: '/checkout'
+}
+[browser] Uncaught SyntaxError: Unexpected end of JSON input
+    at JSON.parse (<anonymous>)
+[browser] Image with src "/robux-packages/43-90.png" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
+[browser] Image with src "/robux-packages/23-90.png" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
+[browser] Image with src "/robux-packages/209-90.png" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
+[browser] Image with src "/robux-packages/209-90.png" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading
+[browser] Image with src "/fundo-robux.png" is using quality "55" which is not configured in images.qualities [75]. Please update your config to [55, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[browser] Image with src "/personagem-robux.png" is using quality "70" which is not configured in images.qualities [75]. Please update your config to [70, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[browser] Image with src "/robux-packages/23-90.png" is using quality "68" which is not configured in images.qualities [75]. Please update your config to [68, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[browser] Image with src "/robux-packages/43-90.png" is using quality "68" which is not configured in images.qualities [75]. Please update your config to [68, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[browser] Image with src "/robux-packages/99-90.png" is using quality "68" which is not configured in images.qualities [75]. Please update your config to [68, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[browser] Image with src "/robux-packages/209-90.png" is using quality "68" which is not configured in images.qualities [75]. Please update your config to [68, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+[browser] Image with src "/robux-packages/439-90.png" is using quality "68" which is not configured in images.qualities [75]. Please update your config to [68, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+⚠ Found a change in next.config.mjs. Restarting the server to apply the changes...
+Image with src "/fundo-robux.png" is using quality "55" which is not configured in images.qualities [75]. Please update your config to [55, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+Image with src "/personagem-robux.png" is using quality "70" which is not configured in images.qualities [75]. Please update your config to [70, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+Image with src "/robux-packages/23-90.png" is using quality "68" which is not configured in images.qualities [75]. Please update your config to [68, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+Image with src "/robux-packages/43-90.png" is using quality "68" which is not configured in images.qualities [75]. Please update your config to [68, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+Image with src "/robux-packages/99-90.png" is using quality "68" which is not configured in images.qualities [75]. Please update your config to [68, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+Image with src "/robux-packages/209-90.png" is using quality "68" which is not configured in images.qualities [75]. Please update your config to [68, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities
+Image with src "/robux-packages/439-90.png" is using quality "68" which is not configured in images.qualities [75]. Please update your config to [68, 75].
+Read more: https://nextjs.org/docs/messages/next-image-unconfigured-qualities

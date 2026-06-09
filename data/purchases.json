@@ -1,0 +1,49 @@
+{
+  "purchases": [
+    {
+      "accountEmail": "dugueta22",
+      "robloxUser": "dugueta",
+      "packageId": "p3400",
+      "amount": "3.400",
+      "price": "R$ 24,90",
+      "total": "R$ 24,90",
+      "paymentMethod": "pix",
+      "id": "d6ee1a79-d5a3-494a-a623-9f94b68146f5",
+      "status": "pending",
+      "createdAt": "2026-06-09T01:01:55.351Z",
+      "gatewayPaymentId": "d6ee1a79-d5a3-494a-a623-9f94b68146f5",
+      "gatewayProvider": "paradise",
+      "pixCopyPaste": "00020126870014br.gov.bcb.pix2565qrcode.fyhub.com.br/qr/v3/at/7d26a5f3-fa6a-465f-900e-bc463958f5595204000053039865802BR5923COMPRA_CERTIFICADA_LTDA6007BARUERI62070503***6304224D"
+    },
+    {
+      "accountEmail": "dugueta22",
+      "robloxUser": "fdfghnbvfg",
+      "packageId": "p3400",
+      "amount": "3.400",
+      "price": "R$ 24,90",
+      "total": "R$ 24,90",
+      "paymentMethod": "pix",
+      "id": "c3bd5255-bed0-4c05-aa07-166a9f95f6b1",
+      "status": "pending",
+      "createdAt": "2026-06-09T01:11:51.676Z",
+      "gatewayPaymentId": "c3bd5255-bed0-4c05-aa07-166a9f95f6b1",
+      "gatewayProvider": "paradise",
+      "pixCopyPaste": "00020126870014br.gov.bcb.pix2565qrcode.fyhub.com.br/qr/v3/at/09657f5b-1b22-4471-aeff-6fd1b9a756855204000053039865802BR5923COMPRA_CERTIFICADA_LTDA6007BARUERI62070503***63042B91"
+    },
+    {
+      "accountEmail": "dugueta22",
+      "robloxUser": "fdfghnbvfg",
+      "packageId": "p3400",
+      "amount": "3.400",
+      "price": "R$ 24,90",
+      "total": "R$ 24,90",
+      "paymentMethod": "pix",
+      "id": "5707f96a-046a-49ad-8f75-5c50f1383699",
+      "status": "pending",
+      "createdAt": "2026-06-09T01:12:54.015Z",
+      "gatewayPaymentId": "5707f96a-046a-49ad-8f75-5c50f1383699",
+      "gatewayProvider": "paradise",
+      "pixCopyPaste": "00020126870014br.gov.bcb.pix2565qrcode.fyhub.com.br/qr/v3/at/6b454b07-6796-4049-a12a-8c0771e8162a5204000053039865802BR5923COMPRA_CERTIFICADA_LTDA6007BARUERI62070503***63040B75"
+    }
+  ]
+}
