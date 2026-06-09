@@ -257,7 +257,7 @@ export default function HomePage() {
 
       if (!account) {
         setIsProfileMenuOpen(false);
-        setPurchaseGateMessage("Sua conta foi removida. Faça login novamente.");
+        setPurchaseGateMessage("");
       }
     });
   }, [loggedAccount?.id]);

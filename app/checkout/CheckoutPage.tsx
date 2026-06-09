@@ -145,7 +145,7 @@ export function CheckoutPage({ selectedPackage }: { selectedPackage: RobuxPackag
       setIsLogged(false);
       setAccountIdentifier("");
       setEmail("");
-      setPurchaseStatus("Sua conta foi removida. Faca login novamente.");
+      setPurchaseStatus("");
     });
   }, []);
 
