@@ -88,6 +88,8 @@ export async function createParadisePixPayment(input: ParadisePixInput): Promise
   };
 
   let response: Response;
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 30000);
 
   try {
     response = await fetch(joinUrl(baseUrl, endpoint), {
@@ -97,14 +99,16 @@ export async function createParadisePixPayment(input: ParadisePixInput): Promise
         [authHeader]: authScheme && authScheme.toLowerCase() !== "none" ? `${authScheme} ${token}` : token,
       },
       method: "POST",
-      signal: AbortSignal.timeout(30000),
+      signal: controller.signal,
     });
   } catch (error) {
     throw new Error(
-      error instanceof DOMException && error.name === "TimeoutError"
+      error instanceof DOMException && error.name === "AbortError"
         ? "A Paradise demorou para responder. Tente gerar o pagamento novamente."
-        : "Nao foi possivel conectar na Paradise para gerar o Pix."
+        : `Nao foi possivel conectar na Paradise para gerar o Pix${error instanceof Error ? `: ${error.message}` : "."}`
     );
+  } finally {
+    clearTimeout(timeout);
   }
 
   const contentType = response.headers.get("content-type") ?? "";
