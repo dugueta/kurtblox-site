@@ -87,14 +87,25 @@ export async function createParadisePixPayment(input: ParadisePixInput): Promise
     source: "api_externa",
   };
 
-  const response = await fetch(joinUrl(baseUrl, endpoint), {
-    body: JSON.stringify(body),
-    headers: {
-      "Content-Type": "application/json",
-      [authHeader]: authScheme && authScheme.toLowerCase() !== "none" ? `${authScheme} ${token}` : token,
-    },
-    method: "POST",
-  });
+  let response: Response;
+
+  try {
+    response = await fetch(joinUrl(baseUrl, endpoint), {
+      body: JSON.stringify(body),
+      headers: {
+        "Content-Type": "application/json",
+        [authHeader]: authScheme && authScheme.toLowerCase() !== "none" ? `${authScheme} ${token}` : token,
+      },
+      method: "POST",
+      signal: AbortSignal.timeout(30000),
+    });
+  } catch (error) {
+    throw new Error(
+      error instanceof DOMException && error.name === "TimeoutError"
+        ? "A Paradise demorou para responder. Tente gerar o pagamento novamente."
+        : "Nao foi possivel conectar na Paradise para gerar o Pix."
+    );
+  }
 
   const contentType = response.headers.get("content-type") ?? "";
   const data = contentType.includes("application/json") ? await response.json().catch(() => null) as unknown : null;
@@ -108,11 +119,17 @@ export async function createParadisePixPayment(input: ParadisePixInput): Promise
     throw new Error(`Paradise respondeu ${contentType || "sem content-type"}, mas era esperado JSON. Confira PARADISE_PIX_ENDPOINT.`);
   }
 
-  return {
+  const payment = {
     gatewayPaymentId: findString(data, ["id", "transactionId", "transaction_id", "paymentId", "payment_id"]),
     paymentUrl: findString(data, ["paymentUrl", "payment_url", "checkoutUrl", "checkout_url", "url"]),
     pixCopyPaste: findString(data, ["pix_code", "qr_code", "pixCopyPaste", "pix_copy_paste", "copyPaste", "copy_paste", "brCode", "brcode"]),
     pixQrCode: findString(data, ["qr_code_base64", "pixQrCode", "pix_qr_code", "qrCodeBase64", "qrCodeImage", "qr_code_image"]),
     raw: data,
   };
+
+  if (!payment.paymentUrl && !payment.pixCopyPaste && !payment.pixQrCode) {
+    throw new Error("Pagamento criado sem QR Code Pix. Confira a resposta da Paradise.");
+  }
+
+  return payment;
 }

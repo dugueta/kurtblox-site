@@ -155,40 +155,61 @@ export function CheckoutPage({ selectedPackage }: { selectedPackage: RobuxPackag
     setPurchaseStatus("");
     setGatewayPayment(null);
 
-    const response = await fetch("/api/purchases", {
-      body: JSON.stringify({
-        accountEmail: normalizedAccountIdentifier,
-        customerEmail: email,
-        robloxUser,
-        customerPhone,
-        cardHolderName: paymentMethod === "card" ? cardHolderName : undefined,
-        cardLast4: paymentMethod === "card" ? cleanCardNumber.slice(-4) : undefined,
-        packageId: selectedPackage.id,
-        amount: finalRobuxAmount,
-        price: selectedPackage.price,
-        total: formatPrice(total),
-        paymentMethod,
-        coupon: couponApplied,
-      }),
-      headers: { "Content-Type": "application/json" },
-      method: "POST",
-    });
-    const data = await response.json();
+    const controller = new AbortController();
+    const timeout = window.setTimeout(() => controller.abort(), 45000);
 
-    setIsCreatingPurchase(false);
+    try {
+      const response = await fetch("/api/purchases", {
+        body: JSON.stringify({
+          accountEmail: normalizedAccountIdentifier,
+          customerEmail: email,
+          robloxUser,
+          customerPhone,
+          cardHolderName: paymentMethod === "card" ? cardHolderName : undefined,
+          cardLast4: paymentMethod === "card" ? cleanCardNumber.slice(-4) : undefined,
+          packageId: selectedPackage.id,
+          amount: finalRobuxAmount,
+          price: selectedPackage.price,
+          total: formatPrice(total),
+          paymentMethod,
+          coupon: couponApplied,
+        }),
+        headers: { "Content-Type": "application/json" },
+        method: "POST",
+        signal: controller.signal,
+      });
+      const data = await response.json().catch(() => null) as {
+        error?: string;
+        payment?: GatewayPayment;
+      } | null;
 
-    if (!response.ok) {
-      setPurchaseStatus(data.error ?? "Nao foi possivel gerar o pedido.");
-      return;
+      if (!response.ok) {
+        setPurchaseStatus(data?.error ?? "Nao foi possivel gerar o pedido.");
+        return;
+      }
+
+      if (paymentMethod === "card") {
+        setPurchaseStatus("Solicitacao recebida com sucesso. O prazo e de 3 a 5 dias uteis.");
+        return;
+      }
+
+      if (!data?.payment?.pixCopyPaste && !data?.payment?.pixQrCode && !data?.payment?.paymentUrl) {
+        setPurchaseStatus("Pagamento criado, mas o QR Code nao foi retornado. Tente gerar novamente em alguns segundos.");
+        return;
+      }
+
+      setGatewayPayment(data.payment);
+      setPurchaseStatus("Pagamento gerado. Pague o PIX para liberar sua compra automaticamente.");
+    } catch (error) {
+      setPurchaseStatus(
+        error instanceof DOMException && error.name === "AbortError"
+          ? "A gateway demorou para responder. Tente gerar o pagamento novamente."
+          : "Nao foi possivel gerar o pagamento agora. Tente novamente."
+      );
+    } finally {
+      window.clearTimeout(timeout);
+      setIsCreatingPurchase(false);
     }
-
-    if (paymentMethod === "card") {
-    setPurchaseStatus("Solicitacao recebida com sucesso. O prazo e de 3 a 5 dias uteis.");
-      return;
-    }
-
-    setGatewayPayment(data.payment ?? null);
-    setPurchaseStatus("Pagamento gerado. Pague o PIX para liberar sua compra automaticamente.");
   }
 
   return (
