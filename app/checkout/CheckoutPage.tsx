@@ -377,17 +377,80 @@ export function CheckoutPage({ selectedPackage }: { selectedPackage: RobuxPackag
         <aside className={cn("space-y-4 lg:sticky lg:top-24", gatewayPayment ? "order-first lg:order-none" : "")}>
           <Card className="overflow-hidden border-violet-400/20 bg-[#0b0714]/92 p-5 shadow-[0_24px_90px_rgba(0,0,0,.34)] backdrop-blur">
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(168,85,247,.14),transparent_34%),radial-gradient(circle_at_70%_35%,rgba(34,197,94,.10),transparent_28%)]" />
-            <CardHeader className="relative z-10 items-center text-center">
-              <div className="grid h-24 place-items-center">
-                <span className="relative block h-[92px] w-[92px] drop-shadow-[0_0_18px_rgba(34,197,94,.34)]">
-                  <Image src={selectedPackage.image} alt="" fill priority sizes="92px" quality={68} className="object-contain" />
-                </span>
-              </div>
-              <CardTitle className="text-3xl">{finalRobuxAmount}</CardTitle>
-              <p className="text-xs font-black uppercase tracking-[.14em] text-zinc-500">Robux</p>
+            <CardHeader className={cn("relative z-10 items-center text-center", gatewayPayment ? "pb-3" : "")}>
+              {gatewayPayment ? (
+                <div className="w-full rounded-2xl border border-emerald-300/25 bg-emerald-400/[.08] px-4 py-3">
+                  <div className="flex items-center justify-center gap-2 text-emerald-100">
+                    <span className="grid h-9 w-9 place-items-center rounded-xl bg-emerald-400/15 ring-1 ring-emerald-300/20">
+                      <QrCode size={18} />
+                    </span>
+                    <div className="text-left">
+                      <CardTitle className="text-lg">Pix gerado</CardTitle>
+                      <p className="text-[11px] font-black uppercase tracking-[.12em] text-emerald-200/80">Pague para liberar a compra</p>
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <>
+                  <div className="grid h-24 place-items-center">
+                    <span className="relative block h-[92px] w-[92px] drop-shadow-[0_0_18px_rgba(34,197,94,.34)]">
+                      <Image src={selectedPackage.image} alt="" fill priority sizes="92px" quality={68} className="object-contain" />
+                    </span>
+                  </div>
+                  <CardTitle className="text-3xl">{finalRobuxAmount}</CardTitle>
+                  <p className="text-xs font-black uppercase tracking-[.14em] text-zinc-500">Robux</p>
+                </>
+              )}
             </CardHeader>
 
             <CardContent className="relative z-10 space-y-3">
+              {gatewayPayment ? (
+                <div className="rounded-3xl border border-emerald-300/35 bg-[linear-gradient(180deg,rgba(16,185,129,.20),rgba(124,58,237,.10))] p-4 text-center shadow-[0_22px_70px_rgba(16,185,129,.18)]">
+                  {gatewayPayment.pixQrCode || gatewayPayment.pixCopyPaste ? (
+                    <div className="mx-auto mb-4 w-fit rounded-[30px] bg-white p-3 shadow-[0_18px_50px_rgba(0,0,0,.45)] ring-4 ring-emerald-300/25">
+                      <img
+                        src={getQrCodeImageSrc(gatewayPayment.pixQrCode, gatewayPayment.pixCopyPaste)}
+                        alt="QR Code PIX"
+                        className="h-56 w-56 rounded-2xl object-contain sm:h-64 sm:w-64 lg:h-60 lg:w-60"
+                      />
+                    </div>
+                  ) : null}
+
+                  {gatewayPayment.pixCopyPaste ? (
+                    <div className="rounded-2xl border border-white/10 bg-[#05040a]/78 p-3 text-left">
+                      <div className="mb-2 flex items-center justify-between gap-3">
+                        <span className="text-[11px] font-black uppercase tracking-[.14em] text-emerald-100">Pix copia e cola</span>
+                        <button
+                          type="button"
+                          onClick={() => void navigator.clipboard?.writeText(gatewayPayment.pixCopyPaste ?? "")}
+                          className="inline-flex h-9 items-center gap-1.5 rounded-lg bg-emerald-500 px-3 text-xs font-black text-white shadow-[0_10px_24px_rgba(16,185,129,.24)] transition hover:brightness-110"
+                        >
+                          <Copy size={13} />
+                          Copiar
+                        </button>
+                      </div>
+                      <textarea
+                        readOnly
+                        value={gatewayPayment.pixCopyPaste}
+                        className="h-16 w-full resize-none rounded-xl border border-white/10 bg-black/30 p-3 text-xs font-semibold leading-5 text-zinc-200 outline-none sm:h-20"
+                      />
+                    </div>
+                  ) : null}
+
+                  {gatewayPayment.paymentUrl ? (
+                    <a
+                      href={gatewayPayment.paymentUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="mt-3 inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-emerald-500 px-4 text-sm font-black text-white transition hover:brightness-110"
+                    >
+                      <ExternalLink size={16} />
+                      Abrir pagamento
+                    </a>
+                  ) : null}
+                </div>
+              ) : null}
+
               <div className="flex items-center justify-between border-t border-white/10 pt-4 text-sm">
                 <span className="text-zinc-500">Pacote</span>
                 <strong>{selectedPackage.price}</strong>
@@ -417,63 +480,6 @@ export function CheckoutPage({ selectedPackage }: { selectedPackage: RobuxPackag
               </Button>
 
               {purchaseStatus ? <p className="text-center text-xs font-bold leading-5 text-violet-200">{purchaseStatus}</p> : null}
-
-              {gatewayPayment ? (
-                <div className="rounded-3xl border border-emerald-300/25 bg-[linear-gradient(180deg,rgba(16,185,129,.14),rgba(124,58,237,.08))] p-4 text-center shadow-[0_18px_60px_rgba(16,185,129,.12)]">
-                  <div className="mb-3 flex items-center justify-center gap-2">
-                    <span className="grid h-8 w-8 place-items-center rounded-xl bg-emerald-400/15 text-emerald-200 ring-1 ring-emerald-300/20">
-                      <QrCode size={17} />
-                    </span>
-                    <div className="text-left">
-                      <strong className="block text-sm font-black text-white">Pague com Pix</strong>
-                      <span className="block text-[11px] font-bold text-emerald-200/80">Escaneie ou copie o codigo</span>
-                    </div>
-                  </div>
-
-                  {gatewayPayment.pixQrCode || gatewayPayment.pixCopyPaste ? (
-                    <div className="mx-auto mb-4 w-fit rounded-[28px] bg-white p-3 shadow-[0_16px_40px_rgba(0,0,0,.38)] ring-4 ring-emerald-300/20">
-                      <img
-                        src={getQrCodeImageSrc(gatewayPayment.pixQrCode, gatewayPayment.pixCopyPaste)}
-                        alt="QR Code PIX"
-                        className="h-52 w-52 rounded-2xl object-contain sm:h-56 sm:w-56"
-                      />
-                    </div>
-                  ) : null}
-
-                  {gatewayPayment.pixCopyPaste ? (
-                    <div className="rounded-2xl border border-white/10 bg-[#05040a]/72 p-3 text-left">
-                      <div className="mb-2 flex items-center justify-between gap-3">
-                        <span className="text-[11px] font-black uppercase tracking-[.14em] text-zinc-500">Pix copia e cola</span>
-                        <button
-                          type="button"
-                          onClick={() => void navigator.clipboard?.writeText(gatewayPayment.pixCopyPaste ?? "")}
-                          className="inline-flex h-8 items-center gap-1 rounded-lg bg-white/[.06] px-2 text-xs font-black text-zinc-200 transition hover:bg-white/[.10]"
-                        >
-                          <Copy size={13} />
-                          Copiar
-                        </button>
-                      </div>
-                      <textarea
-                        readOnly
-                        value={gatewayPayment.pixCopyPaste}
-                        className="h-20 w-full resize-none rounded-xl border border-white/10 bg-black/30 p-3 text-xs font-semibold leading-5 text-zinc-200 outline-none"
-                      />
-                    </div>
-                  ) : null}
-
-                  {gatewayPayment.paymentUrl ? (
-                    <a
-                      href={gatewayPayment.paymentUrl}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="mt-3 inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl bg-emerald-500 px-4 text-sm font-black text-white transition hover:brightness-110"
-                    >
-                      <ExternalLink size={16} />
-                      Abrir pagamento
-                    </a>
-                  ) : null}
-                </div>
-              ) : null}
 
               <p className="flex items-center justify-center gap-2 text-center text-xs font-semibold leading-5 text-zinc-500">
                 <LockKeyhole size={14} />
