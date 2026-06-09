@@ -98,7 +98,7 @@ input {
   }
 }
 
-@media (max-width: 639px) {
+@media (max-width: 1023px) {
   .checkout-page,
   .checkout-header,
   .checkout-shell,
@@ -110,8 +110,8 @@ input {
   }
 
   .checkout-shell {
-    display: grid !important;
-    grid-template-columns: minmax(0, 1fr) !important;
+    display: flex !important;
+    flex-direction: column !important;
     justify-items: stretch !important;
     margin-left: 0 !important;
     margin-right: 0 !important;
@@ -120,6 +120,8 @@ input {
   }
 
   .checkout-card {
+    width: calc(100vw - 24px) !important;
+    max-width: calc(100vw - 24px) !important;
     justify-self: stretch !important;
     margin-left: 0 !important;
     margin-right: 0 !important;
