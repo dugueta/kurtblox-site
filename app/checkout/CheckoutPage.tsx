@@ -261,7 +261,7 @@ export function CheckoutPage({ selectedPackage }: { selectedPackage: RobuxPackag
         </div>
       </header>
 
-      <section className="checkout-shell relative z-10 flex min-h-[calc(100vh-73px)] w-full min-w-0 flex-col items-stretch gap-4 px-3 py-3 sm:mx-auto sm:max-w-6xl sm:gap-5 sm:px-5 sm:py-5 lg:grid lg:grid-cols-[minmax(0,1fr)_430px] lg:items-start lg:py-6">
+      <section className="checkout-shell relative z-10 flex min-h-[calc(100vh-73px)] w-full min-w-0 flex-col items-stretch gap-4 px-3 py-3 sm:gap-5 sm:px-5 sm:py-5 lg:grid lg:grid-cols-[minmax(0,1fr)_430px] lg:items-start lg:py-6">
         <Card className="checkout-card w-full min-w-0 overflow-hidden border-violet-400/20 bg-[#0b0714]/92 p-4 shadow-[0_24px_90px_rgba(0,0,0,.34)] backdrop-blur sm:p-5">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_0%,rgba(168,85,247,.17),transparent_30%),radial-gradient(circle_at_88%_16%,rgba(34,197,94,.10),transparent_24%)]" />
           <CardHeader className="relative z-10 min-w-0">
