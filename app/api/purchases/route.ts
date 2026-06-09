@@ -45,8 +45,9 @@ export async function POST(request: NextRequest) {
   const customerDocument = body?.customerDocument?.replace(/\D/g, "") ?? "";
   const customerPhone = body?.customerPhone?.replace(/\D/g, "") ?? "";
   const customerEmail = body?.customerEmail?.trim() || body?.accountEmail?.trim() || "";
+  const accountEmail = body?.accountEmail?.trim() || customerEmail;
 
-  if (!body?.accountEmail?.trim() || !customerEmail.includes("@") || !body.robloxUser?.trim() || !body.packageId || !body.amount || !body.price || !body.total || !body.paymentMethod || customerDocument.length < 11 || customerPhone.length < 10) {
+  if (!accountEmail || !customerEmail.includes("@") || !body?.robloxUser?.trim() || !body.packageId || !body.amount || !body.price || !body.total || !body.paymentMethod || customerPhone.length < 10) {
     return NextResponse.json({ error: "Preencha os dados da compra." }, { status: 400 });
   }
 
@@ -55,7 +56,7 @@ export async function POST(request: NextRequest) {
   }
 
   const purchase = await createPurchase({
-    accountEmail: body.accountEmail.trim(),
+    accountEmail,
     robloxUser: body.robloxUser.trim(),
     packageId: body.packageId,
     amount: body.amount,
@@ -75,7 +76,7 @@ export async function POST(request: NextRequest) {
     const payment = await createParadisePixPayment({
       amountCents: parsePriceToCents(body.total),
       customer: {
-        document: customerDocument,
+        document: customerDocument || undefined,
         email: customerEmail,
         name: body.robloxUser.trim(),
         phone: customerPhone,

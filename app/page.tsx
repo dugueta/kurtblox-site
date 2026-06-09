@@ -12,7 +12,6 @@ import {
   LockKeyhole,
   Mail,
   Menu,
-  MessageCircle,
   Send,
   ShieldCheck,
   ShoppingCart,
@@ -62,7 +61,6 @@ const features: Feature[] = [
 const actionCards: ActionCard[] = [
   { icon: Headphones, title: "Suporte", text: "Atendimento rápido", href: "#suporte" },
   { icon: BadgeCheck, title: "Quem somos", text: "Loja simples e segura", href: "#quem-somos" },
-  { icon: MessageCircle, title: "Discord", text: "Entre na comunidade", href: "https://discord.gg/7ZE3xPJdPu" },
 ];
 
 const trustItems: Feature[] = [
@@ -505,52 +503,6 @@ export default function HomePage() {
           </nav>
 
           <div className="ml-auto flex items-center gap-2 sm:gap-3">
-            <div className="relative">
-              <Button
-                variant="premium"
-                className="h-10 max-w-[160px] px-3 text-xs sm:h-11 sm:max-w-[210px] sm:px-4 sm:text-sm"
-                onClick={() => {
-                  if (loggedAccount) {
-                    setIsProfileMenuOpen((open) => !open);
-                    return;
-                  }
-
-                  setIsAuthOpen(true);
-                }}
-              >
-                <User size={16} />
-                <span className="truncate">{loggedAccount ? loggedAccount.name || loggedAccount.email : "Entrar"}</span>
-              </Button>
-
-              {loggedAccount && isProfileMenuOpen ? (
-                <div className="absolute right-0 top-[calc(100%+10px)] z-30 w-56 rounded-2xl border border-violet-400/20 bg-[#0b0714]/96 p-2 shadow-[0_18px_50px_rgba(0,0,0,.45)] backdrop-blur">
-                  <div className="border-b border-white/10 px-3 py-2">
-                    <p className="truncate text-sm font-black text-white">{loggedAccount.name || loggedAccount.email}</p>
-                    <p className="truncate text-xs font-semibold text-zinc-500">{loggedAccount.email}</p>
-                  </div>
-                  <div className="mt-2 space-y-1">
-                    <a
-                      href="/compras"
-                      className="block w-full rounded-xl px-3 py-2 text-left text-sm font-black text-zinc-200 transition hover:bg-violet-500/10 hover:text-white"
-                    >
-                      Compras
-                    </a>
-                    <button
-                      type="button"
-                      className="w-full rounded-xl px-3 py-2 text-left text-sm font-black text-red-300 transition hover:bg-red-400/10 hover:text-red-200"
-                      onClick={() => {
-                        clearStoredAccount();
-                        setLoggedAccount(null);
-                        setIsProfileMenuOpen(false);
-                        setPurchaseGateMessage("Você saiu da sua conta");
-                      }}
-                    >
-                      Sair da conta
-                    </button>
-                  </div>
-                </div>
-              ) : null}
-            </div>
             <Button variant="ghost" size="icon" className="hidden lg:hidden" aria-label="Abrir menu">
               <Menu size={20} />
             </Button>
@@ -584,7 +536,7 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.08 }}
-            className="grid grid-cols-3 gap-2 sm:gap-3"
+            className="mx-auto grid w-full max-w-[430px] grid-cols-2 content-start gap-3 self-start lg:mx-0 lg:max-w-none"
           >
             {actionCards.map((action) => (
               action.title === "Quem somos" ? (
@@ -595,9 +547,9 @@ export default function HomePage() {
                   onClick={() => setIsAboutOpen(true)}
                 >
                   <Card
-                    className="h-full border-violet-400/15 bg-[#0d0918]/88 p-3 text-center shadow-[inset_0_1px_0_rgba(255,255,255,.05)] backdrop-blur transition hover:-translate-y-1 hover:border-violet-400/45 hover:bg-violet-500/[.08] sm:p-5 sm:text-left"
+                    className="min-h-[138px] border-violet-400/15 bg-[#0d0918]/88 p-3 text-center shadow-[inset_0_1px_0_rgba(255,255,255,.05)] backdrop-blur transition hover:-translate-y-1 hover:border-violet-400/45 hover:bg-violet-500/[.08] sm:min-h-[160px] sm:p-5 sm:text-left"
                   >
-                    <CardContent className="flex h-full flex-col items-center justify-center gap-2 sm:items-start sm:justify-start sm:gap-4">
+                    <CardContent className="flex h-full flex-col items-center justify-center gap-2 sm:items-start sm:justify-center sm:gap-4">
                       <div className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-violet-500/10 text-violet-300 ring-1 ring-violet-400/20 transition group-hover:bg-violet-500/20 group-hover:text-white sm:h-12 sm:w-12">
                         <action.icon size={22} strokeWidth={1.8} />
                       </div>
@@ -616,9 +568,9 @@ export default function HomePage() {
                   onClick={() => setIsSupportOpen(true)}
                 >
                   <Card
-                    className="h-full border-violet-400/15 bg-[#0d0918]/88 p-3 text-center shadow-[inset_0_1px_0_rgba(255,255,255,.05)] backdrop-blur transition hover:-translate-y-1 hover:border-violet-400/45 hover:bg-violet-500/[.08] sm:p-5 sm:text-left"
+                    className="min-h-[138px] border-violet-400/15 bg-[#0d0918]/88 p-3 text-center shadow-[inset_0_1px_0_rgba(255,255,255,.05)] backdrop-blur transition hover:-translate-y-1 hover:border-violet-400/45 hover:bg-violet-500/[.08] sm:min-h-[160px] sm:p-5 sm:text-left"
                   >
-                    <CardContent className="flex h-full flex-col items-center justify-center gap-2 sm:items-start sm:justify-start sm:gap-4">
+                    <CardContent className="flex h-full flex-col items-center justify-center gap-2 sm:items-start sm:justify-center sm:gap-4">
                       <div className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-violet-500/10 text-violet-300 ring-1 ring-violet-400/20 transition group-hover:bg-violet-500/20 group-hover:text-white sm:h-12 sm:w-12">
                         <action.icon size={22} strokeWidth={1.8} />
                       </div>
@@ -638,9 +590,9 @@ export default function HomePage() {
                   rel={action.href.startsWith("https://") ? "noreferrer" : undefined}
                 >
                   <Card
-                    className="h-full border-violet-400/15 bg-[#0d0918]/88 p-3 text-center shadow-[inset_0_1px_0_rgba(255,255,255,.05)] backdrop-blur transition hover:-translate-y-1 hover:border-violet-400/45 hover:bg-violet-500/[.08] sm:p-5 sm:text-left"
+                    className="min-h-[138px] border-violet-400/15 bg-[#0d0918]/88 p-3 text-center shadow-[inset_0_1px_0_rgba(255,255,255,.05)] backdrop-blur transition hover:-translate-y-1 hover:border-violet-400/45 hover:bg-violet-500/[.08] sm:min-h-[160px] sm:p-5 sm:text-left"
                   >
-                    <CardContent className="flex h-full flex-col items-center justify-center gap-2 sm:items-start sm:justify-start sm:gap-4">
+                    <CardContent className="flex h-full flex-col items-center justify-center gap-2 sm:items-start sm:justify-center sm:gap-4">
                       <div className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl bg-violet-500/10 text-violet-300 ring-1 ring-violet-400/20 transition group-hover:bg-violet-500/20 group-hover:text-white sm:h-12 sm:w-12">
                         <action.icon size={22} strokeWidth={1.8} />
                       </div>
@@ -750,11 +702,6 @@ export default function HomePage() {
                     className="mt-3 inline-flex h-10 w-full items-center justify-center gap-1.5 whitespace-nowrap rounded-xl bg-gradient-to-r from-violet-600 via-fuchsia-600 to-violet-700 px-3 text-xs font-bold text-white shadow-[0_14px_36px_rgba(124,58,237,.42)] transition duration-200 hover:brightness-110 active:scale-[.98]"
                     onClick={(event) => {
                       event.stopPropagation();
-
-                      if (!loggedAccount) {
-                        event.preventDefault();
-                        setPurchaseGateMessage("Faça login para continuar a compra");
-                      }
                     }}
                   >
                     <ShoppingCart size={16} />
@@ -934,7 +881,7 @@ export default function HomePage() {
                 </div>
               ) : (
                 <div className="rounded-2xl border border-white/10 bg-white/[.035] px-4 py-3 text-sm leading-6 text-zinc-400">
-                  Preencha seus dados para abrir um atendimento. Quando o login do site estiver pronto, este fluxo pode ser vinculado ao usuario logado.
+                  Preencha seus dados para abrir um atendimento. O suporte usa essas informacoes para acompanhar seu pedido.
                 </div>
               )}
             </div>

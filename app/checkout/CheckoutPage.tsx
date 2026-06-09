@@ -37,16 +37,6 @@ function formatPrice(value: number) {
   }).format(value);
 }
 
-function formatCpf(value: string) {
-  const digits = value.replace(/\D/g, "").slice(0, 11);
-
-  if (digits.length <= 3) return digits;
-  if (digits.length <= 6) return `${digits.slice(0, 3)}.${digits.slice(3)}`;
-  if (digits.length <= 9) return `${digits.slice(0, 3)}.${digits.slice(3, 6)}.${digits.slice(6)}`;
-
-  return `${digits.slice(0, 3)}.${digits.slice(3, 6)}.${digits.slice(6, 9)}-${digits.slice(9)}`;
-}
-
 function formatPhone(value: string) {
   const digits = value.replace(/\D/g, "").slice(0, 11);
 
@@ -75,7 +65,6 @@ export function CheckoutPage({ selectedPackage }: { selectedPackage: RobuxPackag
   const [couponApplied, setCouponApplied] = useState("");
   const [email, setEmail] = useState("");
   const [robloxUser, setRobloxUser] = useState("");
-  const [customerDocument, setCustomerDocument] = useState("");
   const [customerPhone, setCustomerPhone] = useState("");
   const [accountIdentifier, setAccountIdentifier] = useState("");
   const [cardHolderName, setCardHolderName] = useState("");
@@ -150,13 +139,8 @@ export function CheckoutPage({ selectedPackage }: { selectedPackage: RobuxPackag
   }, []);
 
   async function handleCreatePurchase() {
-    if (!isLogged) {
-      setPurchaseStatus("Faca login para continuar comprando.");
-      return;
-    }
-
-    if (!email.trim().includes("@") || !robloxUser.trim() || customerDocument.replace(/\D/g, "").length < 11 || customerPhone.replace(/\D/g, "").length < 10) {
-      setPurchaseStatus("Informe email, usuario Roblox, CPF e telefone antes de gerar o pagamento.");
+    if (!email.trim().includes("@") || !robloxUser.trim() || customerPhone.replace(/\D/g, "").length < 10) {
+      setPurchaseStatus("Informe email, usuario Roblox e telefone antes de gerar o pagamento.");
       return;
     }
 
@@ -176,7 +160,6 @@ export function CheckoutPage({ selectedPackage }: { selectedPackage: RobuxPackag
         accountEmail: normalizedAccountIdentifier,
         customerEmail: email,
         robloxUser,
-        customerDocument,
         customerPhone,
         cardHolderName: paymentMethod === "card" ? cardHolderName : undefined,
         cardLast4: paymentMethod === "card" ? cleanCardNumber.slice(-4) : undefined,
@@ -302,17 +285,6 @@ export function CheckoutPage({ selectedPackage }: { selectedPackage: RobuxPackag
               <label className="block">
                 <span className="mb-2 block text-xs font-black uppercase tracking-[.14em] text-zinc-500">Usuario Roblox</span>
                 <input value={robloxUser} onChange={(event) => setRobloxUser(event.target.value)} className="h-12 w-full rounded-xl border border-white/10 bg-white/[.04] px-4 text-sm font-semibold text-white outline-none transition placeholder:text-zinc-600 focus:border-violet-400/70" placeholder="Seu nick no Roblox" />
-              </label>
-              <label className="block">
-                <span className="mb-2 block text-xs font-black uppercase tracking-[.14em] text-zinc-500">CPF</span>
-                <input
-                  value={customerDocument}
-                  onChange={(event) => setCustomerDocument(formatCpf(event.target.value))}
-                  className="h-12 w-full rounded-xl border border-white/10 bg-white/[.04] px-4 text-sm font-semibold text-white outline-none transition placeholder:text-zinc-600 focus:border-violet-400/70"
-                  placeholder="000.000.000-00"
-                  inputMode="numeric"
-                  maxLength={14}
-                />
               </label>
               <label className="block">
                 <span className="mb-2 block text-xs font-black uppercase tracking-[.14em] text-zinc-500">Telefone</span>

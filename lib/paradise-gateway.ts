@@ -3,7 +3,7 @@ type ParadisePixInput = {
   amountCents: number;
   robloxAmount: string;
   customer: {
-    document: string;
+    document?: string;
     email: string;
     name: string;
     phone: string;
@@ -63,15 +63,24 @@ export async function createParadisePixPayment(input: ParadisePixInput): Promise
   const authHeader = process.env.PARADISE_AUTH_HEADER?.trim() || "Authorization";
   const amountMode = process.env.PARADISE_AMOUNT_MODE?.trim() || "cents";
   const amount = amountMode === "decimal" ? input.amountCents / 100 : input.amountCents;
+  const customer: {
+    document?: string;
+    email: string;
+    name: string;
+    phone: string;
+  } = {
+    email: input.customer.email,
+    name: input.customer.name,
+    phone: input.customer.phone,
+  };
+
+  if (input.customer.document) {
+    customer.document = input.customer.document;
+  }
 
   const body = {
     amount,
-    customer: {
-      document: input.customer.document,
-      email: input.customer.email,
-      name: input.customer.name,
-      phone: input.customer.phone,
-    },
+    customer,
     description: `${input.robloxAmount} Robux`,
     postback_url: input.postbackUrl,
     reference: input.purchaseId,
