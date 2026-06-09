@@ -23,12 +23,68 @@ const writableAccountsPath = process.env.VERCEL
   ? path.join("/tmp", "kurtblox", "accounts.json")
   : accountsPath;
 const passwordHashPrefix = "scrypt";
+const accountsKvKey = "kurtblox:accounts";
 
 function createEmptyData(): AccountsData {
   return { accounts: [] };
 }
 
+function hasKvStore() {
+  return Boolean(process.env.KV_REST_API_URL && process.env.KV_REST_API_TOKEN);
+}
+
+async function readAccountsFromKv(): Promise<AccountsData | null> {
+  if (!hasKvStore()) return null;
+
+  const response = await fetch(process.env.KV_REST_API_URL!, {
+    body: JSON.stringify(["GET", accountsKvKey]),
+    headers: {
+      Authorization: `Bearer ${process.env.KV_REST_API_TOKEN}`,
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+  });
+
+  if (!response.ok) {
+    throw new Error(`KV read failed with HTTP ${response.status}`);
+  }
+
+  const data = await response.json() as { result?: string | AccountsData | null };
+
+  if (!data.result) return null;
+  if (typeof data.result === "string") return JSON.parse(data.result) as AccountsData;
+
+  return data.result;
+}
+
+async function writeAccountsToKv(data: AccountsData) {
+  if (!hasKvStore()) return false;
+
+  const response = await fetch(process.env.KV_REST_API_URL!, {
+    body: JSON.stringify(["SET", accountsKvKey, JSON.stringify(data)]),
+    headers: {
+      Authorization: `Bearer ${process.env.KV_REST_API_TOKEN}`,
+      "Content-Type": "application/json",
+    },
+    method: "POST",
+  });
+
+  if (!response.ok) {
+    throw new Error(`KV write failed with HTTP ${response.status}`);
+  }
+
+  return true;
+}
+
 async function readAccountsData(): Promise<AccountsData> {
+  try {
+    const kvData = await readAccountsFromKv();
+
+    if (kvData) return kvData;
+  } catch (error) {
+    console.error("Nao foi possivel ler contas do KV.", error);
+  }
+
   try {
     return JSON.parse(await readFile(writableAccountsPath, "utf8")) as AccountsData;
   } catch {
@@ -41,6 +97,12 @@ async function readAccountsData(): Promise<AccountsData> {
 }
 
 async function writeAccountsData(data: AccountsData) {
+  try {
+    if (await writeAccountsToKv(data)) return;
+  } catch (error) {
+    console.error("Nao foi possivel gravar contas no KV.", error);
+  }
+
   await mkdir(path.dirname(writableAccountsPath), { recursive: true });
   await writeFile(writableAccountsPath, JSON.stringify(data, null, 2));
 }
