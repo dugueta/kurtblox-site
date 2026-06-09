@@ -45,8 +45,7 @@ async function verifyStoredAccount() {
     });
 
     if (response.status === 404) {
-      clearStoredAccount();
-      return null;
+      return account;
     }
 
     if (!response.ok) {

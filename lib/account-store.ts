@@ -19,6 +19,9 @@ export type AccountsData = {
 };
 
 const accountsPath = path.join(process.cwd(), "data", "accounts.json");
+const writableAccountsPath = process.env.VERCEL
+  ? path.join("/tmp", "kurtblox", "accounts.json")
+  : accountsPath;
 const passwordHashPrefix = "scrypt";
 
 function createEmptyData(): AccountsData {
@@ -27,20 +30,19 @@ function createEmptyData(): AccountsData {
 
 async function readAccountsData(): Promise<AccountsData> {
   try {
-    return JSON.parse(await readFile(accountsPath, "utf8")) as AccountsData;
+    return JSON.parse(await readFile(writableAccountsPath, "utf8")) as AccountsData;
   } catch {
-    return createEmptyData();
+    try {
+      return JSON.parse(await readFile(accountsPath, "utf8")) as AccountsData;
+    } catch {
+      return createEmptyData();
+    }
   }
 }
 
 async function writeAccountsData(data: AccountsData) {
-  if (process.env.VERCEL) {
-    console.log("Vercel detectado, ignorando gravação em accounts.json");
-    return;
-  }
-
-  await mkdir(path.dirname(accountsPath), { recursive: true });
-  await writeFile(accountsPath, JSON.stringify(data, null, 2));
+  await mkdir(path.dirname(writableAccountsPath), { recursive: true });
+  await writeFile(writableAccountsPath, JSON.stringify(data, null, 2));
 }
 
 function hashPassword(password: string) {
