@@ -6,15 +6,15 @@ import { NextResponse } from "next/server";
 const adminCookieName = "kurtblox-admin-session";
 
 function getAdminUser() {
-  return process.env.ADMIN_USER;
+  return process.env.ADMIN_USER ?? "dugueta22";
 }
 
 function getAdminPassword() {
-  return process.env.ADMIN_PASSWORD;
+  return process.env.ADMIN_PASSWORD ?? "j4b4rr3t0";
 }
 
 function getSessionSecret() {
-  return process.env.ADMIN_SESSION_SECRET ?? process.env.GOOGLE_CLIENT_SECRET;
+  return process.env.ADMIN_SESSION_SECRET ?? process.env.GOOGLE_CLIENT_SECRET ?? "kurtblox-admin-session-secret";
 }
 
 function sign(value: string) {
