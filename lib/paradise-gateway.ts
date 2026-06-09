@@ -20,13 +20,40 @@ export type ParadisePixPayment = {
 };
 
 function getRequiredEnv(name: string) {
-  const value = process.env[name]?.trim();
+  const value = getEnvValue(name);
 
   if (!value) {
     throw new Error(`Configure ${name} para gerar pagamentos na Paradise.`);
   }
 
   return value;
+}
+
+function getEnvValue(name: string) {
+  const direct = extractEnvValue(name, process.env[name]);
+  if (direct) return direct;
+
+  for (const value of Object.values(process.env)) {
+    const found = extractEnvValue(name, value);
+    if (found) return found;
+  }
+
+  return "";
+}
+
+function extractEnvValue(name: string, value?: string) {
+  const cleanValue = value?.trim();
+  if (!cleanValue) return "";
+
+  if (!cleanValue.includes("\n")) return cleanValue;
+
+  const prefix = `${name}=`;
+  const line = cleanValue
+    .split(/\r?\n/)
+    .map((item) => item.trim())
+    .find((item) => item.startsWith(prefix));
+
+  return line?.slice(prefix.length).trim().replace(/^["']|["']$/g, "") ?? "";
 }
 
 function joinUrl(baseUrl: string, endpoint: string) {
@@ -57,11 +84,11 @@ export function isParadiseConfigured() {
 
 export async function createParadisePixPayment(input: ParadisePixInput): Promise<ParadisePixPayment> {
   const token = getRequiredEnv("PARADISE_API_TOKEN");
-  const baseUrl = process.env.PARADISE_API_URL?.trim() || "https://multi.paradisepags.com";
-  const endpoint = process.env.PARADISE_PIX_ENDPOINT?.trim() || "/api/v1/transaction.php";
-  const authScheme = process.env.PARADISE_AUTH_SCHEME?.trim() ?? "Bearer";
-  const authHeader = process.env.PARADISE_AUTH_HEADER?.trim() || "Authorization";
-  const amountMode = process.env.PARADISE_AMOUNT_MODE?.trim() || "cents";
+  const baseUrl = getEnvValue("PARADISE_API_URL") || "https://multi.paradisepags.com";
+  const endpoint = getEnvValue("PARADISE_PIX_ENDPOINT") || "/api/v1/transaction.php";
+  const authScheme = getEnvValue("PARADISE_AUTH_SCHEME") || "Bearer";
+  const authHeader = getEnvValue("PARADISE_AUTH_HEADER") || "Authorization";
+  const amountMode = getEnvValue("PARADISE_AMOUNT_MODE") || "cents";
   const amount = amountMode === "decimal" ? input.amountCents / 100 : input.amountCents;
   const customer: {
     document?: string;
@@ -102,10 +129,12 @@ export async function createParadisePixPayment(input: ParadisePixInput): Promise
       signal: controller.signal,
     });
   } catch (error) {
+    console.error("Falha ao conectar na Paradise.", error);
+
     throw new Error(
       error instanceof DOMException && error.name === "AbortError"
         ? "A Paradise demorou para responder. Tente gerar o pagamento novamente."
-        : `Nao foi possivel conectar na Paradise para gerar o Pix${error instanceof Error ? `: ${error.message}` : "."}`
+        : "Nao foi possivel conectar na Paradise para gerar o Pix."
     );
   } finally {
     clearTimeout(timeout);
