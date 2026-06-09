@@ -264,7 +264,7 @@ export function CheckoutPage({ selectedPackage }: { selectedPackage: RobuxPackag
             <div className="grid min-w-0 gap-3 sm:grid-cols-2">
               {[
                 { id: "pix" as const, title: "PIX", text: "Pagamento rapido com QR Code", icon: QrCode, disabled: false },
-                { id: "card" as const, title: "Cartao", text: "Servico indisponivel", icon: CreditCard, disabled: true },
+                { id: "card" as const, title: "Cartao", text: "Serviço indisponível", icon: CreditCard, disabled: true },
               ].map((method) => (
                 <button
                   key={method.id}
