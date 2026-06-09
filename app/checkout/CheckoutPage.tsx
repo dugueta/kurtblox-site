@@ -216,7 +216,7 @@ export function CheckoutPage({ selectedPackage }: { selectedPackage: RobuxPackag
   }
 
   return (
-    <main className="min-h-screen overflow-x-hidden bg-[#05040a] text-white">
+    <main className="checkout-page min-h-screen overflow-x-hidden bg-[#05040a] text-white">
       <div className="pointer-events-none fixed inset-0">
         <Image
           src="/fundo-robux.png"
@@ -232,7 +232,7 @@ export function CheckoutPage({ selectedPackage }: { selectedPackage: RobuxPackag
       <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_50%_-12%,rgba(124,58,237,.28),transparent_36%),radial-gradient(circle_at_86%_22%,rgba(34,197,94,.14),transparent_24%),linear-gradient(180deg,rgba(5,4,10,.16),#05040a_84%)]" />
       <div className="pointer-events-none fixed inset-0 opacity-[.10] [background-image:linear-gradient(rgba(255,255,255,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.08)_1px,transparent_1px)] [background-size:72px_72px]" />
 
-      <header className="relative z-10 border-b border-white/[.06] bg-[#05040a]/72 px-3 py-4 backdrop-blur-xl sm:px-5">
+      <header className="checkout-header relative z-10 border-b border-white/[.06] bg-[#05040a]/72 px-3 py-4 backdrop-blur-xl sm:px-5">
         <div className="mx-auto flex w-full max-w-6xl min-w-0 items-center justify-between gap-4">
           <a
             href="/"
@@ -249,8 +249,8 @@ export function CheckoutPage({ selectedPackage }: { selectedPackage: RobuxPackag
         </div>
       </header>
 
-      <section className="relative z-10 mx-auto grid min-h-[calc(100vh-73px)] w-full max-w-6xl min-w-0 items-start gap-4 px-3 py-3 sm:gap-5 sm:px-5 sm:py-5 lg:grid-cols-[minmax(0,1fr)_430px] lg:py-6">
-        <Card className="min-w-0 overflow-hidden border-violet-400/20 bg-[#0b0714]/92 p-4 shadow-[0_24px_90px_rgba(0,0,0,.34)] backdrop-blur sm:p-5">
+      <section className="checkout-shell relative z-10 grid min-h-[calc(100vh-73px)] w-full min-w-0 items-start gap-4 px-3 py-3 sm:mx-auto sm:max-w-6xl sm:gap-5 sm:px-5 sm:py-5 lg:grid-cols-[minmax(0,1fr)_430px] lg:py-6">
+        <Card className="checkout-card min-w-0 overflow-hidden border-violet-400/20 bg-[#0b0714]/92 p-4 shadow-[0_24px_90px_rgba(0,0,0,.34)] backdrop-blur sm:p-5">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_0%,rgba(168,85,247,.17),transparent_30%),radial-gradient(circle_at_88%_16%,rgba(34,197,94,.10),transparent_24%)]" />
           <CardHeader className="relative z-10 min-w-0">
             <p className="text-xs font-black uppercase tracking-[.16em] text-violet-300">Pagamento</p>
@@ -374,8 +374,8 @@ export function CheckoutPage({ selectedPackage }: { selectedPackage: RobuxPackag
           </CardContent>
         </Card>
 
-        <aside className={cn("min-w-0 space-y-4 lg:sticky lg:top-24", gatewayPayment ? "order-first lg:order-none" : "")}>
-          <Card className="min-w-0 overflow-hidden border-violet-400/20 bg-[#0b0714]/92 p-4 shadow-[0_24px_90px_rgba(0,0,0,.34)] backdrop-blur sm:p-5">
+        <aside className={cn("checkout-summary min-w-0 space-y-4 lg:sticky lg:top-24", gatewayPayment ? "order-first lg:order-none" : "")}>
+          <Card className="checkout-card min-w-0 overflow-hidden border-violet-400/20 bg-[#0b0714]/92 p-4 shadow-[0_24px_90px_rgba(0,0,0,.34)] backdrop-blur sm:p-5">
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(168,85,247,.14),transparent_34%),radial-gradient(circle_at_70%_35%,rgba(34,197,94,.10),transparent_28%)]" />
             <CardHeader className={cn("relative z-10 items-center text-center", gatewayPayment ? "pb-3" : "")}>
               {gatewayPayment ? (

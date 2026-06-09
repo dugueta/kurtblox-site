@@ -19,6 +19,12 @@ body {
   text-rendering: geometricPrecision;
 }
 
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
 button,
 input {
   font: inherit;
@@ -89,5 +95,33 @@ input {
 
   100% {
     background-position: -35% 50%;
+  }
+}
+
+@media (max-width: 639px) {
+  .checkout-page,
+  .checkout-header,
+  .checkout-shell,
+  .checkout-summary,
+  .checkout-card {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+
+  .checkout-shell {
+    margin-left: 0;
+    margin-right: 0;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .checkout-card {
+    border-radius: 18px;
+  }
+
+  .checkout-card input,
+  .checkout-card textarea,
+  .checkout-card button {
+    max-width: 100%;
   }
 }
