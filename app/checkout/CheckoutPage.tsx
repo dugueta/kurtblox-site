@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { Copy, CreditCard, ExternalLink, LockKeyhole, QrCode, ShoppingCart, Tag } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -74,6 +74,7 @@ export function CheckoutPage({ selectedPackage }: { selectedPackage: RobuxPackag
   const [gatewayPayment, setGatewayPayment] = useState<GatewayPayment | null>(null);
   const [isCreatingPurchase, setIsCreatingPurchase] = useState(false);
   const [isLogged, setIsLogged] = useState(false);
+  const pixPaymentRef = useRef<HTMLDivElement | null>(null);
 
   const basePrice = parsePrice(selectedPackage.price);
   const total = basePrice;
@@ -137,6 +138,17 @@ export function CheckoutPage({ selectedPackage }: { selectedPackage: RobuxPackag
       setPurchaseStatus("");
     });
   }, []);
+
+  useEffect(() => {
+    if (!gatewayPayment) return;
+
+    window.setTimeout(() => {
+      pixPaymentRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }, 100);
+  }, [gatewayPayment]);
 
   async function handleCreatePurchase() {
     if (!email.trim().includes("@") || !robloxUser.trim() || customerPhone.replace(/\D/g, "").length < 10) {
@@ -405,7 +417,7 @@ export function CheckoutPage({ selectedPackage }: { selectedPackage: RobuxPackag
 
             <CardContent className="relative z-10 space-y-3">
               {gatewayPayment ? (
-                <div className="rounded-3xl border border-emerald-300/35 bg-[linear-gradient(180deg,rgba(16,185,129,.20),rgba(124,58,237,.10))] p-4 text-center shadow-[0_22px_70px_rgba(16,185,129,.18)]">
+                <div ref={pixPaymentRef} className="scroll-mt-4 rounded-3xl border border-emerald-300/35 bg-[linear-gradient(180deg,rgba(16,185,129,.20),rgba(124,58,237,.10))] p-4 text-center shadow-[0_22px_70px_rgba(16,185,129,.18)] sm:scroll-mt-6">
                   {gatewayPayment.pixQrCode || gatewayPayment.pixCopyPaste ? (
                     <div className="mx-auto mb-4 w-fit rounded-[30px] bg-white p-3 shadow-[0_18px_50px_rgba(0,0,0,.45)] ring-4 ring-emerald-300/25">
                       <img
