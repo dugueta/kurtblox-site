@@ -216,7 +216,7 @@ export function CheckoutPage({ selectedPackage }: { selectedPackage: RobuxPackag
   }
 
   return (
-    <main className="min-h-screen overflow-hidden bg-[#05040a] text-white">
+    <main className="min-h-screen overflow-x-hidden bg-[#05040a] text-white">
       <div className="pointer-events-none fixed inset-0">
         <Image
           src="/fundo-robux.png"
@@ -232,15 +232,15 @@ export function CheckoutPage({ selectedPackage }: { selectedPackage: RobuxPackag
       <div className="pointer-events-none fixed inset-0 bg-[radial-gradient(circle_at_50%_-12%,rgba(124,58,237,.28),transparent_36%),radial-gradient(circle_at_86%_22%,rgba(34,197,94,.14),transparent_24%),linear-gradient(180deg,rgba(5,4,10,.16),#05040a_84%)]" />
       <div className="pointer-events-none fixed inset-0 opacity-[.10] [background-image:linear-gradient(rgba(255,255,255,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.08)_1px,transparent_1px)] [background-size:72px_72px]" />
 
-      <header className="relative z-10 border-b border-white/[.06] bg-[#05040a]/72 px-5 py-4 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4">
+      <header className="relative z-10 border-b border-white/[.06] bg-[#05040a]/72 px-3 py-4 backdrop-blur-xl sm:px-5">
+        <div className="mx-auto flex w-full max-w-6xl min-w-0 items-center justify-between gap-4">
           <a
             href="/"
             onClick={(event) => {
               event.preventDefault();
               window.location.href = "/";
             }}
-            className="brand-logo inline-flex origin-left items-center gap-1 rounded-lg text-xl font-black tracking-normal transition duration-200 hover:scale-[1.04] focus:outline-none focus:ring-2 focus:ring-violet-400/50 sm:text-2xl"
+            className="brand-logo inline-flex min-w-0 origin-left items-center gap-1 rounded-lg text-xl font-black tracking-normal transition duration-200 hover:scale-[1.04] focus:outline-none focus:ring-2 focus:ring-violet-400/50 sm:text-2xl"
           >
             <span className="brand-word brand-word-white drop-shadow-[0_0_12px_rgba(255,255,255,.18)]">Kurt</span>
             <span className="brand-word brand-word-purple drop-shadow-[0_0_14px_rgba(168,85,247,.45)]">Blox</span>
@@ -249,19 +249,19 @@ export function CheckoutPage({ selectedPackage }: { selectedPackage: RobuxPackag
         </div>
       </header>
 
-      <section className="relative z-10 mx-auto grid min-h-[calc(100vh-73px)] max-w-6xl items-start gap-5 px-5 py-4 sm:py-5 lg:grid-cols-[minmax(0,1fr)_430px] lg:py-6">
-        <Card className="overflow-hidden border-violet-400/20 bg-[#0b0714]/92 p-5 shadow-[0_24px_90px_rgba(0,0,0,.34)] backdrop-blur">
+      <section className="relative z-10 mx-auto grid min-h-[calc(100vh-73px)] w-full max-w-6xl min-w-0 items-start gap-4 px-3 py-3 sm:gap-5 sm:px-5 sm:py-5 lg:grid-cols-[minmax(0,1fr)_430px] lg:py-6">
+        <Card className="min-w-0 overflow-hidden border-violet-400/20 bg-[#0b0714]/92 p-4 shadow-[0_24px_90px_rgba(0,0,0,.34)] backdrop-blur sm:p-5">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_16%_0%,rgba(168,85,247,.17),transparent_30%),radial-gradient(circle_at_88%_16%,rgba(34,197,94,.10),transparent_24%)]" />
-          <CardHeader className="relative z-10">
+          <CardHeader className="relative z-10 min-w-0">
             <p className="text-xs font-black uppercase tracking-[.16em] text-violet-300">Pagamento</p>
-            <CardTitle className="mt-1 text-2xl uppercase sm:text-3xl">Finalizar compra</CardTitle>
+            <CardTitle className="mt-1 text-[1.7rem] uppercase leading-tight sm:text-3xl">Finalizar compra</CardTitle>
             <p className="mt-2 max-w-2xl text-sm leading-6 text-zinc-400">
               Escolha a forma de pagamento, revise os dados e gere o Pix pela gateway.
             </p>
           </CardHeader>
 
-          <CardContent className="relative z-10 mt-4 space-y-5">
-            <div className="grid gap-3 sm:grid-cols-2">
+          <CardContent className="relative z-10 mt-4 min-w-0 space-y-4 sm:space-y-5">
+            <div className="grid min-w-0 gap-3 sm:grid-cols-2">
               {[
                 { id: "pix" as const, title: "PIX", text: "Pagamento rapido com QR Code", icon: QrCode, disabled: false },
                 { id: "card" as const, title: "Cartao", text: "Servico indisponivel", icon: CreditCard, disabled: true },
@@ -270,7 +270,7 @@ export function CheckoutPage({ selectedPackage }: { selectedPackage: RobuxPackag
                   key={method.id}
                   type="button"
                   className={cn(
-                    "flex items-center gap-4 rounded-2xl border p-4 text-left transition disabled:cursor-not-allowed disabled:opacity-55",
+                    "flex min-w-0 items-center gap-3 rounded-2xl border p-3 text-left transition disabled:cursor-not-allowed disabled:opacity-55 sm:gap-4 sm:p-4",
                     paymentMethod === method.id
                       ? "border-violet-400/70 bg-violet-500/[.10]"
                       : "border-white/10 bg-white/[.035] hover:border-violet-400/35"
@@ -284,7 +284,7 @@ export function CheckoutPage({ selectedPackage }: { selectedPackage: RobuxPackag
                   <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-violet-500/12 text-violet-200 ring-1 ring-violet-400/15">
                     <method.icon size={20} />
                   </span>
-                  <span>
+                  <span className="min-w-0">
                     <strong className="block text-sm font-black text-white">{method.title}</strong>
                     <span className="mt-1 block text-xs leading-5 text-zinc-500">{method.text}</span>
                   </span>
@@ -292,8 +292,8 @@ export function CheckoutPage({ selectedPackage }: { selectedPackage: RobuxPackag
               ))}
             </div>
 
-            <div className="grid gap-4 md:grid-cols-2">
-              <label className="block">
+            <div className="grid min-w-0 gap-4 md:grid-cols-2">
+              <label className="block min-w-0">
                 <span className="mb-2 block text-xs font-black uppercase tracking-[.14em] text-zinc-500">Email</span>
                 <input
                   value={email}
@@ -306,11 +306,11 @@ export function CheckoutPage({ selectedPackage }: { selectedPackage: RobuxPackag
                   <span className="mt-2 block text-[11px] font-bold text-zinc-600">Conta: {normalizedAccountIdentifier}</span>
                 ) : null}
               </label>
-              <label className="block">
+              <label className="block min-w-0">
                 <span className="mb-2 block text-xs font-black uppercase tracking-[.14em] text-zinc-500">Usuario Roblox</span>
                 <input value={robloxUser} onChange={(event) => setRobloxUser(event.target.value)} className="h-12 w-full rounded-xl border border-white/10 bg-white/[.04] px-4 text-sm font-semibold text-white outline-none transition placeholder:text-zinc-600 focus:border-violet-400/70" placeholder="Seu nick no Roblox" />
               </label>
-              <label className="block">
+              <label className="block min-w-0">
                 <span className="mb-2 block text-xs font-black uppercase tracking-[.14em] text-zinc-500">Telefone</span>
                 <input
                   value={customerPhone}
@@ -324,24 +324,24 @@ export function CheckoutPage({ selectedPackage }: { selectedPackage: RobuxPackag
             </div>
 
             {paymentMethod === "card" ? (
-              <div className="grid gap-4">
-                <div className="grid gap-4 md:grid-cols-2">
-                  <label className="block">
+              <div className="grid min-w-0 gap-4">
+                <div className="grid min-w-0 gap-4 md:grid-cols-2">
+                  <label className="block min-w-0">
                     <span className="mb-2 block text-xs font-black uppercase tracking-[.14em] text-zinc-500">Nome no cartao</span>
                     <input value={cardHolderName} onChange={(event) => setCardHolderName(event.target.value)} className="h-12 w-full rounded-xl border border-white/10 bg-white/[.04] px-4 text-sm font-semibold text-white outline-none transition placeholder:text-zinc-600 focus:border-violet-400/70" placeholder="Nome impresso no cartao" />
                   </label>
-                  <label className="block">
+                  <label className="block min-w-0">
                     <span className="mb-2 block text-xs font-black uppercase tracking-[.14em] text-zinc-500">Status</span>
                     <input readOnly value="Analise manual em 3 a 5 dias uteis" className="h-12 w-full rounded-xl border border-white/10 bg-white/[.04] px-4 text-sm font-semibold text-zinc-400 outline-none" />
                   </label>
                 </div>
 
-                <div className="grid gap-4 md:grid-cols-[1fr_120px]">
-                  <label className="block">
+                <div className="grid min-w-0 gap-4 md:grid-cols-[1fr_120px]">
+                  <label className="block min-w-0">
                     <span className="mb-2 block text-xs font-black uppercase tracking-[.14em] text-zinc-500">Numero do cartao</span>
                     <input value={cardNumber} onChange={(event) => setCardNumber(event.target.value)} className="h-12 w-full rounded-xl border border-white/10 bg-white/[.04] px-4 text-sm font-semibold text-white outline-none transition placeholder:text-zinc-600 focus:border-violet-400/70" placeholder="0000 0000 0000 0000" inputMode="numeric" />
                   </label>
-                  <label className="block">
+                  <label className="block min-w-0">
                     <span className="mb-2 block text-xs font-black uppercase tracking-[.14em] text-zinc-500">Validade</span>
                     <input value={cardExpiry} onChange={(event) => setCardExpiry(event.target.value)} className="h-12 w-full rounded-xl border border-white/10 bg-white/[.04] px-4 text-sm font-semibold text-white outline-none transition placeholder:text-zinc-600 focus:border-violet-400/70" placeholder="MM/AA" />
                   </label>
@@ -351,9 +351,9 @@ export function CheckoutPage({ selectedPackage }: { selectedPackage: RobuxPackag
               null
             )}
 
-            <div className="rounded-2xl border border-white/10 bg-white/[.035] p-4">
+            <div className="min-w-0 rounded-2xl border border-white/10 bg-white/[.035] p-3 sm:p-4">
               <div className="flex flex-col gap-3 sm:flex-row">
-                <div className="flex-1">
+                <div className="min-w-0 flex-1">
                   <label className="mb-2 flex items-center gap-2 text-xs font-black uppercase tracking-[.14em] text-zinc-500">
                     <Tag size={14} />
                     Cupom
@@ -374,8 +374,8 @@ export function CheckoutPage({ selectedPackage }: { selectedPackage: RobuxPackag
           </CardContent>
         </Card>
 
-        <aside className={cn("space-y-4 lg:sticky lg:top-24", gatewayPayment ? "order-first lg:order-none" : "")}>
-          <Card className="overflow-hidden border-violet-400/20 bg-[#0b0714]/92 p-5 shadow-[0_24px_90px_rgba(0,0,0,.34)] backdrop-blur">
+        <aside className={cn("min-w-0 space-y-4 lg:sticky lg:top-24", gatewayPayment ? "order-first lg:order-none" : "")}>
+          <Card className="min-w-0 overflow-hidden border-violet-400/20 bg-[#0b0714]/92 p-4 shadow-[0_24px_90px_rgba(0,0,0,.34)] backdrop-blur sm:p-5">
             <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(168,85,247,.14),transparent_34%),radial-gradient(circle_at_70%_35%,rgba(34,197,94,.10),transparent_28%)]" />
             <CardHeader className={cn("relative z-10 items-center text-center", gatewayPayment ? "pb-3" : "")}>
               {gatewayPayment ? (
@@ -411,7 +411,7 @@ export function CheckoutPage({ selectedPackage }: { selectedPackage: RobuxPackag
                       <img
                         src={getQrCodeImageSrc(gatewayPayment.pixQrCode, gatewayPayment.pixCopyPaste)}
                         alt="QR Code PIX"
-                        className="h-56 w-56 rounded-2xl object-contain sm:h-64 sm:w-64 lg:h-60 lg:w-60"
+                        className="h-[min(68vw,14rem)] w-[min(68vw,14rem)] rounded-2xl object-contain sm:h-64 sm:w-64 lg:h-60 lg:w-60"
                       />
                     </div>
                   ) : null}
